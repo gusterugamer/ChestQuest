@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputEvents : MonoBehaviour
+namespace GusteruStudio.Input
 {
-    private static GameControls _gameControls;
-    public static InputAction Jump => _gameControls.Player.Jump;
+    public class InputEvents : MonoBehaviour
+    {
+        private static GameControls _gameControls;
+        public static InputAction Jump => _gameControls.Player.Jump;
+        public static InputAction Move => _gameControls.Player.Move;
 
-    void Awake()
-    {
-        _gameControls = new GameControls();
-        DontDestroyOnLoad(gameObject);
-        _gameControls.Enable();
-    }
-    void OnDestroy()
-    {
-        _gameControls.Disable();
+        void Awake()
+        {
+            _gameControls = new GameControls();
+            _gameControls.Enable();
+            DontDestroyOnLoad(gameObject);
+        }
+        void OnDestroy()
+        {
+            _gameControls.Disable();
+        }
     }
 }

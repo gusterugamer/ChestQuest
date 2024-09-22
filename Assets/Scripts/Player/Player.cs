@@ -1,12 +1,7 @@
-using GusteruStudio.ReactiveVariables;
-using MEC;
 using Sirenix.OdinInspector;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Video;
+using GusteruStudio.PlayerStates;
 
 [DisallowMultipleComponent]
 [RequireComponent(typeof(PlayerStates))]

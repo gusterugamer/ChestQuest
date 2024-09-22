@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: PlayerFallingStateSO
   m_EditorClassIdentifier: 
   _isRootState: 1
-  _validStates: []
+  _validSubStates:
+  - {fileID: 11400000, guid: 230b7ef333cb6394e98ce2feda8f5bf7, type: 2}

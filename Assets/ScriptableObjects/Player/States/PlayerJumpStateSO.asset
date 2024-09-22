@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2376730a554ea47b9c5d94e4c91819, type: 3}
   m_Name: PlayerJumpStateSO
   m_EditorClassIdentifier: 
-  _isRootState: 0
-  _validStates: []
+  _isRootState: 1
+  _validSubStates:
+  - {fileID: 11400000, guid: 230b7ef333cb6394e98ce2feda8f5bf7, type: 2}

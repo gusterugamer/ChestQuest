@@ -1,82 +1,111 @@
+using GusteruStudio.Input;
 using MEC;
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-[CreateAssetMenu(fileName = "PlayerMoveStateSO", menuName = "ChestQuest/Player/States/MoveState")]
-public class PlayerMoveState : PlayerBaseState
-{
-    private CharacterController _controller = null;
-
-    private CoroutineHandle _chMoveForward = default;
-
-    private CoroutineHandle _chApplyGravity = default;
-
-    public override void Initialize(Player player)
+namespace GusteruStudio.PlayerStates {
+    [CreateAssetMenu(fileName = "PlayerMoveStateSO", menuName = "ChestQuest/Player/States/MoveState")]
+    public class PlayerMoveState : PlayerBaseState
     {
-        base.Initialize(player);
-        _controller = player.CharacterController;
-    }
+        private CharacterController _controller = null;
 
-    public override void Enter()
-    {
-        base.Enter();
-        _player.BlackBoard.MotionVector = Vector3.zero;
-        _chMoveForward = Timing.RunCoroutine(Move());
-        _chApplyGravity = Timing.RunCoroutine(ApplyGravity());
+        private CoroutineHandle _chMoveForward = default;
 
-        //SubToEvents
-    }
+        private CoroutineHandle _chApplyGravity = default;
 
-    public override void Exit()
-    {
-        base.Exit();
-        Timing.KillCoroutines(_chMoveForward);
-        Timing.KillCoroutines(_chApplyGravity);
-    }
+        private Vector2 _keyboardInput = Vector2.zero;
 
-    public override void Update()
-    {
 
-    }
-
-    private void JumpEventProcessor(InputAction.CallbackContext inputAction)
-    {
-        Jump();
-    }
-
-    private void Jump()
-    {
-        if (_player.CharacterController.isGrounded)
-            _player.PlayerStates.SetState<PlayerJumpState>();
-    }
-
-    private IEnumerator<float> Move()
-    {
-        while (true)
+        private void SubToEvents()
         {
-            _player.BlackBoard.MotionVector.z = _player.Config.RunSpeed;
-            _controller.Move(_player.BlackBoard.MotionVector * Time.deltaTime);
-            yield return 0f;
+            InputEvents.Jump.performed += JumpEventProcessor;
+            InputEvents.Move.performed += Move_performed;
+            InputEvents.Move.canceled += Move_canceled;
         }
-    }
 
-    private IEnumerator<float> ApplyGravity()
-    {
-        while (true)
+        private void UnsubFromEvents()
         {
-            if (_player.BlackBoard.MotionVector.y > _player.Config.JumpGravity && !_player.CharacterController.isGrounded)
+            InputEvents.Jump.performed -= JumpEventProcessor;
+            InputEvents.Move.performed -= Move_performed;
+            InputEvents.Move.canceled -= Move_canceled;
+        }
+
+        #region Input
+        private void Move_canceled(InputAction.CallbackContext obj)
+        {
+            _keyboardInput = Vector2.zero;
+        }
+
+        private void Move_performed(InputAction.CallbackContext obj)
+        {
+            _keyboardInput = obj.ReadValue<Vector2>();
+        }
+
+        private void JumpEventProcessor(InputAction.CallbackContext inputAction)
+        {
+            Jump();
+        }
+        #endregion
+
+        public override void Initialize(Player player)
+        {
+            base.Initialize(player);
+            _controller = player.CharacterController;
+        }
+
+        public override void Enter()
+        {
+            base.Enter();
+            _player.BlackBoard.MotionVector = Vector3.zero;
+            _chMoveForward = Timing.RunCoroutine(Move());
+            _chApplyGravity = Timing.RunCoroutine(ApplyGravity());
+
+            SubToEvents();
+           
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+            Timing.KillCoroutines(_chMoveForward);
+            Timing.KillCoroutines(_chApplyGravity);
+            UnsubFromEvents();
+        }
+
+        private void Jump()
+        {
+            if (_player.CharacterController.isGrounded)
+                _player.PlayerStates.SetState<PlayerJumpState>();
+        }
+
+        private IEnumerator<float> Move()
+        {
+            yield return 0;
+            while (true)
             {
-                _player.BlackBoard.MotionVector.y = Mathf.Clamp(_player.BlackBoard.MotionVector.y + _player.Config.JumpGravity * Time.deltaTime, _player.Config.JumpGravity, Mathf.Infinity);
+                Vector3 moveVector = new Vector3(_keyboardInput.x, 0.0f, _keyboardInput.y).normalized * _player.Config.RunSpeed;
+                moveVector.y = _player.BlackBoard.MotionVector.y;
+                _player.BlackBoard.MotionVector = moveVector;
+                _controller.Move(_player.BlackBoard.MotionVector * Time.deltaTime);
+                yield return 0f;
             }
-            else if (_player.CharacterController.isGrounded)
+        }
+
+        private IEnumerator<float> ApplyGravity()
+        {
+            while (true)
             {
-                _player.BlackBoard.MotionVector.y = _player.Config.GroundedGravity;
+                if (_player.BlackBoard.MotionVector.y > _player.Config.JumpGravity && !_player.CharacterController.isGrounded)
+                {
+                    _player.BlackBoard.MotionVector.y = Mathf.Clamp(_player.BlackBoard.MotionVector.y + _player.Config.JumpGravity * Time.deltaTime, _player.Config.JumpGravity, Mathf.Infinity);
+                }
+                else if (_player.CharacterController.isGrounded)
+                {
+                    _player.BlackBoard.MotionVector.y = _player.Config.GroundedGravity;
+                }
+                yield return 0f;
             }
-            yield return 0f;
         }
     }
 }

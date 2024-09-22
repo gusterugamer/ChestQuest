@@ -3,127 +3,130 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class PlayerStates : MonoBehaviour
+namespace GusteruStudio.PlayerStates
 {
-    [BoxGroup("States")]
-    [SerializeField]
-    private List<PlayerBaseState> _states;
-
-    [BoxGroup("States")]
-    [SerializeField]
-    private PlayerBaseState _defaultState;
-
-    private List<PlayerBaseState> _instantiatedStates = new List<PlayerBaseState>();
-
-    private PlayerBaseState _currentState;
-
-    public PlayerBaseState currentState => _currentState;
-
-    #region UnityMessages
-
-    private void Awake()
+    public partial class PlayerStates : MonoBehaviour
     {
-        foreach (var state in _states)
-        {
-            _instantiatedStates.Add(Instantiate(state));
-        }
+        [BoxGroup("States")]
+        [SerializeField]
+        private List<PlayerBaseState> _states;
 
-        foreach (var state in _instantiatedStates)
-        {
-            state.Initialize(GetComponent<Player>());
-        }
-    }
+        [BoxGroup("States")]
+        [SerializeField]
+        private PlayerBaseState _defaultState;
 
-    private void Start()
-    {
-        SetState(_defaultState.GetType());
-    }
+        private List<PlayerBaseState> _instantiatedStates = new List<PlayerBaseState>();
 
-    private void Update()
-    {
-        foreach (var state in _instantiatedStates)
-        {
-            if (state.IsActive)
-                state.Update();
-        }
-    }
+        private PlayerBaseState _currentState;
 
-    private void FixedUpdate()
-    {
-        foreach (var state in _instantiatedStates)
-        {
-            if (state.IsActive)
-                state.FixedUpdate();
-        }
-    }
-    #endregion
+        public PlayerBaseState currentState => _currentState;
 
-    private void ChangeState(PlayerBaseState newState)
-    {
-        if (newState.IsRootState)
-        {
-            TransferSubState(newState);
-            _currentState?.Exit();
-            _currentState = newState;
-            _currentState.Enter();
+        #region UnityMessages
 
-            Debug.Log("Entered STATE: " + newState.name);
-        }
-        else
+        private void Awake()
         {
-            if (!newState.IsActive)
+            foreach (var state in _states)
             {
-                if (_currentState.SetSubState(newState))
+                _instantiatedStates.Add(Instantiate(state));
+            }
+
+            foreach (var state in _instantiatedStates)
+            {
+                state.Initialize(GetComponent<Player>());
+            }
+        }
+
+        private void Start()
+        {
+            SetState(_defaultState.GetType());
+        }
+
+        private void Update()
+        {
+            foreach (var state in _instantiatedStates)
+            {
+                if (state.IsActive)
+                    state.Update();
+            }
+        }
+
+        private void FixedUpdate()
+        {
+            foreach (var state in _instantiatedStates)
+            {
+                if (state.IsActive)
+                    state.FixedUpdate();
+            }
+        }
+        #endregion
+
+        private void ChangeState(PlayerBaseState newState)
+        {
+            if (newState.IsRootState)
+            {
+                TransferSubState(newState);
+                _currentState?.Exit();
+                _currentState = newState;
+                _currentState.Enter();
+
+                Debug.Log("Entered STATE: " + newState.name);
+            }
+            else
+            {
+                if (!newState.IsActive)
                 {
-                    newState.Enter();
-                    Debug.Log("Entered SUBstate: " + newState.name);
+                    if (_currentState.SetSubState(newState))
+                    {
+                        newState.Enter();
+                        Debug.Log("Entered SUBstate: " + newState.name);
+                    }
                 }
             }
         }
-    }
 
-    private void TransferSubState(PlayerBaseState newState)
-    {
-        if (_currentState == null) return;
-        List<PlayerBaseState> invalidStates = newState.SetSubStates(_currentState.SubStates);
-
-        string message = "Invalid states: ";
-        foreach (var state in invalidStates)
+        private void TransferSubState(PlayerBaseState newState)
         {
-            message += state.name + ": ";
-            state.Exit();
-        }
+            if (_currentState == null) return;
+            List<PlayerBaseState> invalidStates = newState.SetSubStates(_currentState.SubStates);
 
-        Debug.Log(message);
-    }
-
-    public T GetState<T>() where T : PlayerBaseState
-    {
-        foreach (PlayerBaseState state in _instantiatedStates)
-        {
-            if (state.GetType() == typeof(T))
+            string message = "Invalid states: ";
+            foreach (var state in invalidStates)
             {
-                return (T)state;
+                message += state.name + ": ";
+                state.Exit();
             }
+
+            Debug.Log(message);
         }
-        return null;
-    }
 
-    public bool SetState<T>() where T : PlayerBaseState
-    {
-        return SetState(typeof(T));
-    }
-
-    public bool SetState(System.Type type)
-    {
-        foreach (PlayerBaseState state in _instantiatedStates)
+        public T GetState<T>() where T : PlayerBaseState
         {
-            if (state.GetType() == type)
+            foreach (PlayerBaseState state in _instantiatedStates)
             {
-                ChangeState(state);
-                return true;
+                if (state.GetType() == typeof(T))
+                {
+                    return (T)state;
+                }
             }
+            return null;
         }
-        return false;
+
+        public bool SetState<T>() where T : PlayerBaseState
+        {
+            return SetState(typeof(T));
+        }
+
+        public bool SetState(System.Type type)
+        {
+            foreach (PlayerBaseState state in _instantiatedStates)
+            {
+                if (state.GetType() == type)
+                {
+                    ChangeState(state);
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

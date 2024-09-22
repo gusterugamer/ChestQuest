@@ -8,23 +8,27 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[InitializeOnLoad]
-public partial class PlayerStates
+namespace GusteruStudio.PlayerStates
 {
-    PlayerStates()
-    {
-        AssetsDataBaseRefreshListener.onDatabaseRefreshed += UpdateListOfStates;
-    }
 
-    ~PlayerStates()
+    [InitializeOnLoad]
+    public partial class PlayerStates
     {
-        AssetsDataBaseRefreshListener.onDatabaseRefreshed -= UpdateListOfStates;
-    }
+        PlayerStates()
+        {
+            AssetsDataBaseRefreshListener.onDatabaseRefreshed += UpdateListOfStates;
+        }
 
-    [Button]
-    private void UpdateListOfStates()
-    {
-        _states = EditorCustomUtilities.LoadAllScriptableObjectsOfType<PlayerBaseState>();
+        ~PlayerStates()
+        {
+            AssetsDataBaseRefreshListener.onDatabaseRefreshed -= UpdateListOfStates;
+        }
+
+        [Button]
+        private void UpdateListOfStates()
+        {
+            _states = EditorCustomUtilities.LoadAllScriptableObjectsOfType<PlayerBaseState>();
+        }
     }
 }
 
