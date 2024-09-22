@@ -26,7 +26,7 @@ public partial class PlayerBaseState
             {
                 string message = ($"YOU ARE NOT ALLOWED TO ADD {state.name} AS A SUBSTATE BECAUSE IS A ROOT STATE!");
                 Debug.Log(message.AsHexColoredText("#c91508"));
-                _validStates.Remove(state);
+                _validSubStates.Remove(state);
             }
         }
     }
@@ -40,7 +40,7 @@ public partial class PlayerBaseState
             {
                 string message = ($"{name} CANNOT BE IS OWN SUBSTATE!");
                 Debug.Log(message.AsHexColoredText("#c91508"));
-                _validStates.Remove(state);
+                _validSubStates.Remove(state);
             }
         }
     }

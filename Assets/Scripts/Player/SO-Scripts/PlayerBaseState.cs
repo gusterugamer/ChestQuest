@@ -13,7 +13,8 @@ public abstract partial class PlayerBaseState : ScriptableObject
     [BoxGroup("States")]
     [OnCollectionChanged(After = "EditorCheckState")]
     [SerializeField]
-    private List<PlayerBaseState> _validStates;
+    [Tooltip("States which are NOT root and can exist when the root state is changed")]
+    private List<PlayerBaseState> _validSubStates;
 
     protected Player _player;
 
@@ -83,7 +84,7 @@ public abstract partial class PlayerBaseState : ScriptableObject
 
     private bool IsStateValid(PlayerBaseState state)
     {
-        foreach (var validState in _validStates)
+        foreach (var validState in _validSubStates)
         {
             if (validState.GetType() == state.GetType())
             {

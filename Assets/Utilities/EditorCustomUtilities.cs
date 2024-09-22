@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -31,8 +30,9 @@ namespace OriginData.Utilities
                 return (T)AssetDatabase.LoadAssetAtPath<Object>(platformPrefabPath);
             if (asset is GameObject)
             {
-                if (asset.GetComponentInChildren<T>() != null)
-                    return asset.GetComponentInChildren<T>();
+                GameObject assetGO = asset as GameObject;
+                if (assetGO.GetComponentInChildren<T>() != null)
+                    return assetGO.GetComponentInChildren<T>();
             }
 
             return null;

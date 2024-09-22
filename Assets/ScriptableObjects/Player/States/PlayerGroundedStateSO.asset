@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: PlayerGroundedStateSO
   m_EditorClassIdentifier: 
   _isRootState: 1
-  _validStates: []
+  _validSubStates: []
