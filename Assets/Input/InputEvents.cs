@@ -11,6 +11,9 @@ namespace GusteruStudio.Input
         public static InputAction Jump => _gameControls.Player.Jump;
         public static InputAction Move => _gameControls.Player.Move;
 
+        public static InputAction Rotate => _gameControls.Player.Rotate;
+        public static InputAction MouseDelta => _gameControls.Player.Mouse;
+
         void Awake()
         {
             _gameControls = new GameControls();

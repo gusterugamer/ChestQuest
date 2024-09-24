@@ -29,10 +29,15 @@ public class PlayerConfigSO : ScriptableObject
     [SerializeField]
     private float _sideStepSpeed = 15f;
 
+    [BoxGroup("Settings")]
+    [SerializeField]
+    private float _rotationSpeed = 3f;
+
     public float GroundedGravity { get => _groundedGravity; }
     public float JumpGravity { get => _jumpGravity; }
     public float JumpHeight { get => _jumpHeight; }
     public float RunSpeed { get => _runSpeed;}
     public float SideStepSpeed { get => _sideStepSpeed;}
+    public float RotationSpeed { get => _rotationSpeed; }
   //  public float RampGravity { get => _rampGravity; }
 }
