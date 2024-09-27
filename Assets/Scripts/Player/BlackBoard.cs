@@ -6,4 +6,5 @@ public class BlackBoard
 {
     public Vector3 MotionVector = Vector3.zero;
     public Quaternion Rotation = Quaternion.identity;
+    public bool isGrounded = false;
 }

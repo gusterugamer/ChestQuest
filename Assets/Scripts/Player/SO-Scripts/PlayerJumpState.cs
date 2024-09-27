@@ -10,6 +10,12 @@ namespace GusteruStudio.PlayerStates
     public class PlayerJumpState : PlayerBaseState
     {
         private CoroutineHandle _chWaitForJumpToFinish = default;
+       
+
+        public override void Initialize(Player player)
+        {
+            base.Initialize(player);
+        }
 
         public override void Enter()
         {
@@ -26,7 +32,7 @@ namespace GusteruStudio.PlayerStates
 
         private void Jump()
         {
-            _player.BlackBoard.MotionVector.y = CalculateVelocity();
+            _player.Rigidbody.velocity += new Vector3(0, CalculateVelocity(),0f);
         }
 
         private float CalculateVelocity()

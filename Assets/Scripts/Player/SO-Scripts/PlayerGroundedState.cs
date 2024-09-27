@@ -15,15 +15,12 @@ namespace GusteruStudio.PlayerStates
         override public void Initialize(Player player)
         {
             base.Initialize(player);
-
         }
 
         public override void Enter()
         {
             base.Enter();
             _player.PlayerStates.SetState<PlayerMoveState>();
-            _player.BlackBoard.MotionVector.y = _player.Config.GroundedGravity;
-
             _chWaitPlayerToFall = Timing.RunCoroutine(WaitPlayerToFall(), _player.gameObject);
             //   _chChangeGravity = Timing.RunCoroutine(ChangeGravity(), Segment.FixedUpdate,_player.gameObject);
         }
@@ -37,7 +34,7 @@ namespace GusteruStudio.PlayerStates
 
         private IEnumerator<float> WaitPlayerToFall()
         {
-            while (_player.CharacterController.isGrounded)
+            while (_player.BlackBoard.isGrounded)
                 yield return 0f;
 
             _player.PlayerStates.SetState<PlayerFallingState>();

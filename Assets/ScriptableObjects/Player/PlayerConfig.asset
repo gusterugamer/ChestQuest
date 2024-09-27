@@ -17,4 +17,4 @@ MonoBehaviour:
   _jumpHeight: 5
   _runSpeed: 5
   _sideStepSpeed: 15
-  _rotationSpeed: 7
+  _rotationSpeed: 20

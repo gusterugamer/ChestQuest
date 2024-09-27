@@ -9,7 +9,7 @@ namespace GusteruStudio.PlayerStates
     [CreateAssetMenu(fileName = "PlayerMoveStateSO", menuName = "ChestQuest/Player/States/MoveState")]
     public class PlayerMoveState : PlayerBaseState
     {
-        private CharacterController _controller = null;
+        private Rigidbody _rigidBody = null;
 
         private CoroutineHandle _chMoveForward = default;
 
@@ -68,7 +68,7 @@ namespace GusteruStudio.PlayerStates
         public override void Initialize(Player player)
         {
             base.Initialize(player);
-            _controller = player.CharacterController;
+            _rigidBody = player.Rigidbody;
         }
 
         public override void Enter()
@@ -76,8 +76,7 @@ namespace GusteruStudio.PlayerStates
             base.Enter();
             _player.BlackBoard.MotionVector = Vector3.zero;
             _chMoveForward = Timing.RunCoroutine(Move());
-            _chApplyGravity = Timing.RunCoroutine(ApplyGravity());
-
+          
             SubToEvents();
         }
 
@@ -88,12 +87,13 @@ namespace GusteruStudio.PlayerStates
             Timing.KillCoroutines(_chApplyGravity);
             Timing.KillCoroutines(_chRotate);
             Timing.KillCoroutines(_chMovementInput);
+           
             UnsubFromEvents();
         }
 
         private void Jump()
         {
-            if (_player.CharacterController.isGrounded)
+            if (_player.BlackBoard.isGrounded)
                 _player.PlayerStates.SetState<PlayerJumpState>();
         }
 
@@ -105,23 +105,21 @@ namespace GusteruStudio.PlayerStates
                 Vector3 movement = _player.transform.forward * _movementInput.y + _player.transform.right * _movementInput.x;
                 movement.y = 0;
                 Vector3 moveVector = movement.normalized * _player.Config.RunSpeed;
-                moveVector.y = _player.BlackBoard.MotionVector.y;
 
-                _player.BlackBoard.MotionVector = moveVector;
+                _player.BlackBoard.MotionVector += moveVector;
                 yield return 0;
             }
-            _player.BlackBoard.MotionVector = new Vector3(0.0f,_player.BlackBoard.MotionVector.y,0.0f);
         }
 
         private IEnumerator<float> Rotate()
         {
             while (true)
             {
-                Vector3 currentEulerRotation = _controller.transform.rotation.eulerAngles;
+                Vector3 currentEulerRotation = _rigidBody.transform.rotation.eulerAngles;
                 Vector2 mouseXDelta = InputEvents.MouseDelta.ReadValue<Vector2>() * Time.deltaTime * _player.Config.RotationSpeed;
 
                 Quaternion rotation = Quaternion.Euler(currentEulerRotation.x, currentEulerRotation.y + mouseXDelta.x, currentEulerRotation.z);
-                _controller.transform.rotation = rotation;
+                _player.Rigidbody.MoveRotation(rotation);
 
                 yield return 0;
             }
@@ -131,23 +129,8 @@ namespace GusteruStudio.PlayerStates
         {
             while (true)
             {
-                _controller.Move(_player.BlackBoard.MotionVector * Time.deltaTime);
-                yield return 0f;
-            }
-        }
-
-        private IEnumerator<float> ApplyGravity()
-        {
-            while (true)
-            {
-                if (_player.BlackBoard.MotionVector.y > _player.Config.JumpGravity && !_player.CharacterController.isGrounded)
-                {
-                    _player.BlackBoard.MotionVector.y = Mathf.Clamp(_player.BlackBoard.MotionVector.y + _player.Config.JumpGravity * Time.deltaTime, _player.Config.JumpGravity, Mathf.Infinity);
-                }
-                else if (_player.CharacterController.isGrounded)
-                {
-                    _player.BlackBoard.MotionVector.y = _player.Config.GroundedGravity;
-                }
+                _rigidBody.velocity = new Vector3(_player.BlackBoard.MotionVector.x, _rigidBody.velocity.y, _player.BlackBoard.MotionVector.z);
+                _player.BlackBoard.MotionVector = Vector3.zero;
                 yield return 0f;
             }
         }

@@ -22,7 +22,7 @@ namespace GusteruStudio.PlayerStates
 
         private IEnumerator<float> WaitForJumpToFinish()
         {
-            while (!_player.CharacterController.isGrounded)
+            while (!_player.BlackBoard.isGrounded)
                 yield return 0f;
 
             _player.PlayerStates.SetState<PlayerGroundedState>();
