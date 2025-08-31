@@ -1,29 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
-
-namespace GusteruStudio.ReactiveVariables
-{
-    [CreateAssetMenu(menuName = "GusteruStudio/Events/SimpleEvent")]
-    public sealed class SimpleEvent : ScriptableObject
-    {
-        [NonSerialized]private UnityEvent _simpleEvent = new UnityEvent();
-
-        public void Subscribe(UnityAction callBack)
-        {
-            _simpleEvent.AddListener(callBack);
-        }
-
-        public void Unsubscribe(UnityAction callBack)
-        {
-            _simpleEvent.RemoveListener(callBack);
-        }
-
-        public void Invoke()
-        {
-            _simpleEvent.Invoke();
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:8b1bb83ddd3190441f228e2ebab3c782733b60808f25e15065894c5ba446e070
+size 709

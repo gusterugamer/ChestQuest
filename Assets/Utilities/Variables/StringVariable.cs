@@ -1,11 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-namespace GusteruStudio.ReactiveVariables
-{
-    [CreateAssetMenu(menuName = "GusteruStudio/ReactiveVariables/StringVariable")]
-    public class StringVariable : ReactiveVariableTemplate<string>
-    {
-        public static implicit operator string(StringVariable fVar) => fVar.Value;
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:4a32bd3f148a2c23f5180da5d907bab06f848efcec7c7adad953d2479c9ad0f4
+size 370

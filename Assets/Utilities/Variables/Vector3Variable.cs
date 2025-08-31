@@ -1,13 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace GusteruStudio.ReactiveVariables
-{
-    [CreateAssetMenu(menuName = "GusteruStudio/ReactiveVariables/Vector3Variable")]
-    public class Vector3Variable : ReactiveVariableTemplate<Vector3>
-    {
-        public static implicit operator Vector3(Vector3Variable fVar) => fVar.Value;
-        public static implicit operator string(Vector3Variable fVar) => fVar.Value.ToString();
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:2109bdb3fc471507429f64c3fdd4a04082b240fdbbee936d0cb4cec4d9bdb61a
+size 471

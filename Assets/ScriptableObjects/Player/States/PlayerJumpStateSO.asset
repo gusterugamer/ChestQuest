@@ -1,17 +1,3 @@
-%YAML 1.1
-%TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c2376730a554ea47b9c5d94e4c91819, type: 3}
-  m_Name: PlayerJumpStateSO
-  m_EditorClassIdentifier: 
-  _isRootState: 1
-  _validSubStates:
-  - {fileID: 11400000, guid: 230b7ef333cb6394e98ce2feda8f5bf7, type: 2}
+version https://git-lfs.github.com/spec/v1
+oid sha256:9914ae201631a309e491b55270fdecb01cecfd5dc0def1559a20ee8b737ed0d7
+size 515

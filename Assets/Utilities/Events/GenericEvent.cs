@@ -1,28 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
-
-namespace GusteruStudio.Selection
-{
-    public abstract class GenericEvent<T> : ScriptableObject
-    {
-        [NonSerialized] private UnityEvent<T> _simpleEvent = new UnityEvent<T>();
-
-        public void Subscribe(UnityAction<T> callBack)
-        {
-            _simpleEvent.AddListener(callBack);
-        }
-
-        public void Unsubscribe(UnityAction<T> callBack)
-        {
-            _simpleEvent.RemoveListener(callBack);
-        }
-
-        public void Invoke(T arg)
-        {
-            _simpleEvent.Invoke(arg);
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:fed97e9af58544895116ad9108a3ca1697b732f1501413430ddd77eb9d131bec
+size 659
