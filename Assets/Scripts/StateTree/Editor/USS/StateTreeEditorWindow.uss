@@ -1,0 +1,339 @@
+/* ========================================
+   StateTree Editor Window USS
+   Dark/Light theme variants matching
+   Graph Designer conventions.
+   ======================================== */
+
+/* -- State Bar -- */
+
+.st-state-bar {
+    flex-direction: row;
+    align-items: center;
+    border-left-width: 4px;
+    border-radius: 3px;
+    padding: 4px 8px;
+    margin: 1px 4px;
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0);
+    transition-property: border-color;
+    transition-duration: 0.3s;
+}
+
+.st-state-bar-dark {
+    background-color: rgb(56, 56, 56);
+    border-left-color: rgb(80, 80, 80);
+}
+
+.st-state-bar-light {
+    background-color: rgb(194, 194, 194);
+    border-left-color: rgb(160, 160, 160);
+}
+
+.st-state-bar:hover {
+    border-color: rgba(68, 192, 255, 0.5);
+}
+
+.st-state-bar--selected {
+    border-color: rgba(68, 192, 255, 0.9);
+}
+
+.st-state-bar--root {
+    border-left-color: #e8912d;
+}
+
+.st-state-bar--active {
+    border-color: #4ec94e;
+    border-width: 2px;
+    transition-property: border-color;
+    transition-duration: 0.5s;
+}
+
+.st-state-bar--drag-hover {
+    border-bottom-width: 2px;
+    border-bottom-color: rgba(68, 192, 255, 0.7);
+}
+
+.st-state-bar--breakpoint {
+    position: relative;
+}
+
+/* Breakpoint indicator dot */
+.st-state-bar--breakpoint > .st-state-bar__breakpoint-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background-color: #e8442d;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+}
+
+/* -- State Bar Elements -- */
+
+.st-state-bar__icon {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    margin-right: 4px;
+}
+
+.st-state-bar__color-indicator {
+    width: 4px;
+    height: 20px;
+    border-radius: 2px;
+    margin-right: 6px;
+    flex-shrink: 0;
+}
+
+.st-state-bar__name {
+    flex-grow: 1;
+    -unity-font-style: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+}
+
+.st-state-bar__type-badge {
+    font-size: 9px;
+    padding: 1px 4px;
+    border-radius: 3px;
+    margin-left: 4px;
+    flex-shrink: 0;
+    -unity-font-style: italic;
+    opacity: 0.7;
+}
+
+.st-state-bar__child-count {
+    font-size: 10px;
+    margin-left: 4px;
+    flex-shrink: 0;
+    opacity: 0.5;
+}
+
+/* -- Toolbar -- */
+
+.st-toolbar {
+    flex-direction: row;
+    align-items: center;
+    border-bottom-width: 1px;
+    padding: 2px 4px;
+    min-height: 28px;
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 0px;
+}
+
+.st-toolbar-dark {
+    border-color: rgba(48, 48, 48, 1);
+}
+
+.st-toolbar-light {
+    border-color: rgba(173, 173, 173, 1);
+}
+
+.st-toolbar__button {
+    border-width: 0px 1px;
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 0px;
+    padding: 2px 8px;
+    margin: 0px 2px;
+}
+
+.st-toolbar__button:hover {
+    background-color: rgba(68, 192, 255, 0.15);
+}
+
+.st-toolbar__spacer {
+    flex-grow: 1;
+}
+
+.st-toolbar__validation-icon {
+    width: 16px;
+    height: 16px;
+    margin-left: 4px;
+}
+
+/* -- Config Panel -- */
+
+.st-config-panel {
+    width: 250px;
+    min-width: 225px;
+    max-width: 400px;
+    padding: 8px;
+    border-right-width: 1px;
+    overflow: hidden;
+}
+
+.st-config-panel-dark {
+    border-color: rgba(35, 35, 35, 1);
+    background-color: rgb(56, 56, 56);
+}
+
+.st-config-panel-light {
+    border-color: rgba(153, 153, 153, 1);
+    background-color: rgb(194, 194, 194);
+}
+
+.st-config-panel__header {
+    -unity-font-style: bold;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.st-config-panel__section {
+    margin-bottom: 12px;
+}
+
+.st-config-panel__section-header {
+    -unity-font-style: bold;
+    font-size: 11px;
+    margin-bottom: 4px;
+    padding: 2px 4px;
+    border-bottom-width: 1px;
+    border-color: rgba(128, 128, 128, 0.3);
+}
+
+/* -- Center Panel -- */
+
+.st-center-panel {
+    flex-grow: 1;
+    min-width: 200px;
+}
+
+.st-tree-view {
+    flex-grow: 1;
+}
+
+/* -- Details Panel -- */
+
+.st-details-panel {
+    min-width: 250px;
+    padding: 8px;
+    border-left-width: 1px;
+    overflow: hidden;
+}
+
+.st-details-panel-dark {
+    border-color: rgba(35, 35, 35, 1);
+    background-color: rgb(56, 56, 56);
+}
+
+.st-details-panel-light {
+    border-color: rgba(153, 153, 153, 1);
+    background-color: rgb(194, 194, 194);
+}
+
+.st-details-panel__header {
+    -unity-font-style: bold;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.st-details-panel__section {
+    margin-bottom: 8px;
+}
+
+.st-details-panel__section-header {
+    -unity-font-style: bold;
+    font-size: 11px;
+    margin-bottom: 4px;
+    padding: 2px 0px;
+}
+
+.st-details-panel__add-button {
+    align-self: flex-start;
+    margin-top: 4px;
+    padding: 2px 8px;
+}
+
+.st-details-panel__row {
+    flex-direction: row;
+    align-items: center;
+    padding: 2px 0px;
+    margin-bottom: 2px;
+}
+
+.st-details-panel__row-label {
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.st-details-panel__remove-button {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    margin-left: 4px;
+    -unity-text-align: middle-center;
+    font-size: 14px;
+}
+
+/* -- Transition Log -- */
+
+.st-transition-log {
+    max-height: 150px;
+    border-top-width: 1px;
+}
+
+.st-transition-log-dark {
+    background-color: rgba(15, 15, 15, 0.75);
+    border-color: rgba(35, 35, 35, 1);
+}
+
+.st-transition-log-light {
+    background-color: rgba(220, 220, 220, 0.75);
+    border-color: rgba(153, 153, 153, 1);
+}
+
+.st-transition-log__row {
+    flex-direction: row;
+    padding: 1px 4px;
+    font-size: 10px;
+}
+
+.st-transition-log__timestamp {
+    width: 60px;
+    flex-shrink: 0;
+    opacity: 0.6;
+}
+
+.st-transition-log__from {
+    margin-right: 4px;
+    color: rgb(255, 180, 100);
+}
+
+.st-transition-log__arrow {
+    margin-right: 4px;
+    opacity: 0.6;
+}
+
+.st-transition-log__to {
+    margin-right: 4px;
+    color: rgb(100, 200, 255);
+}
+
+.st-transition-log__trigger {
+    opacity: 0.5;
+    -unity-font-style: italic;
+}
+
+/* -- No Asset Message -- */
+
+.st-no-asset-label {
+    -unity-text-align: middle-center;
+    flex-grow: 1;
+    font-size: 14px;
+    opacity: 0.5;
+}
+
+/* -- Inline Inspector -- */
+
+.st-inline-inspector {
+    margin-left: 8px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    padding: 4px;
+    border-left-width: 2px;
+    border-left-color: rgba(68, 192, 255, 0.3);
+}

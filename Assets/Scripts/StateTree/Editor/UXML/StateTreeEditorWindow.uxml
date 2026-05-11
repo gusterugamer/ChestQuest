@@ -1,0 +1,19 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:TwoPaneSplitView name="outer-split" fixed-pane-index="0" fixed-pane-initial-dimension="250" orientation="Horizontal">
+        <!-- Left: Config Panel -->
+        <ui:VisualElement name="config-panel" class="st-config-panel" />
+
+        <!-- Inner: Hierarchy + Details -->
+        <ui:TwoPaneSplitView name="inner-split" fixed-pane-index="1" fixed-pane-initial-dimension="350" orientation="Horizontal">
+            <!-- Center: Toolbar + TreeView + Transition Log -->
+            <ui:VisualElement name="center-panel" class="st-center-panel">
+                <ui:VisualElement name="toolbar-container" class="st-toolbar" />
+                <ui:TreeView name="state-tree-view" fixed-item-height="32" class="st-tree-view" />
+                <ui:ScrollView name="transition-log" class="st-transition-log" />
+            </ui:VisualElement>
+
+            <!-- Right: Details Panel -->
+            <ui:VisualElement name="details-panel" class="st-details-panel" />
+        </ui:TwoPaneSplitView>
+    </ui:TwoPaneSplitView>
+</ui:UXML>
