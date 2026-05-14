@@ -1,9 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
-    <ui:VisualElement name="state-bar-root" class="st-state-bar">
-        <ui:Image name="state-icon" class="st-state-bar__icon" />
-        <ui:VisualElement name="color-indicator" class="st-state-bar__color-indicator" />
-        <ui:Label name="state-name" class="st-state-bar__name" />
-        <ui:Label name="type-badge" class="st-state-bar__type-badge" />
-        <ui:Label name="child-count" class="st-state-bar__child-count" />
-    </ui:VisualElement>
-</ui:UXML>
